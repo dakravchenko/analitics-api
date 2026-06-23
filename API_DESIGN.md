@@ -33,9 +33,9 @@ JSON
 }
 
 Endpoints
-1. Create Analytics Record
+1. Create events Record
 
-Endpoint: POST /api/v1/analytics
+Endpoint: POST /api/v1/events
 
 Request:
 JSON
@@ -81,9 +81,9 @@ JSON
   ]
 }
 
-2. List Analytics Records
+2. List events Records
 
-Endpoint: GET /api/v1/analytics
+Endpoint: GET /api/v1/events
 
 Query Parameters:
 
@@ -94,7 +94,7 @@ Query Parameters:
 
 Examples:
 
-    GET /api/v1/analytics — All records
+    GET /api/v1/events— All records
     GET /api/v1/analytics?type=PAGE_VIEW — All PAGE_VIEW events
     GET /api/v1/analytics?startTime=2026-06-23T00:00:00Z — Records from June 23 onwards
     GET /api/v1/analytics?startTime=2026-06-23T00:00:00Z&endTime=2026-06-23T23:59:59Z — Records within a specific day
@@ -118,7 +118,7 @@ JSON
   }
 ]
 
-3. Get Single Analytics Record
+3. Get Single eventsRecord
 
 Endpoint: GET /api/v1/analytics/{id}
 
@@ -139,12 +139,12 @@ Error Response:
 JSON
 
 {
-  "error": "Analytics record with id '550e8400-e29b-41d4-a716-446655440000' not found"
+  "error": "eventsrecord with id '550e8400-e29b-41d4-a716-446655440000' not found"
 }
 
-4. Update Analytics Record
+4. Update events Record
 
-Endpoint: PUT /api/v1/analytics/{id}
+Endpoint: PUT /api/v1/events/{id}
 
 Request:
 JSON
@@ -174,16 +174,16 @@ Error Responses:
     404 Not Found — Record does not exist
     400 Bad Request — Missing or invalid fields (same as POST)
 
-5. Delete Analytics Record
+5. Delete events Record
 
-Endpoint: DELETE /api/v1/analytics/{id}
+Endpoint: DELETE /api/v1/events/{id}
 
 Response:
 
     204 No Content — Successfully deleted
     404 Not Found — Record does not exist
 
-6. Analytics Report
+6. events Report
 
 Endpoint: GET /api/v1/report
 
@@ -251,6 +251,6 @@ Privacy & GDPR Compliance
     ✅ No names, email addresses, real user IDs, or IP addresses stored
     ✅ Session IDs are anonymized and server-side only
     ✅ Session IDs never included in API responses
-    ✅ Minimal data collection with clear purpose (analytics only)
+    ✅ Minimal data collection with clear purpose (events only)
 
 
