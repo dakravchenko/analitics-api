@@ -1,0 +1,12 @@
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/AnalyticsApiApplication.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/enums/EventSource.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/enums/EventType.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/EventsController.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/EventsService.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/dto/request/CreateEventRequest.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/dto/response/EventResponse.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/exception/ErrorResponse.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/exception/ErrorsResponse.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/exception/GlobalExceptionHandler.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/exception/RecordNotFoundException.java
+/home/daniil/Workspace/AnalyticsAPI/src/main/java/com/daniil/AnalyticsAPI/events/models/EventModel.java
