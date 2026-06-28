@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.daniil.AnalyticsAPI.enums.EventSource;
 import com.daniil.AnalyticsAPI.enums.EventType;
 import com.daniil.AnalyticsAPI.events.dto.request.CreateEventRequest;
+import com.daniil.AnalyticsAPI.events.dto.request.UpdateEventRequest;
+import com.daniil.AnalyticsAPI.events.dto.response.EventReportResponse;
 import com.daniil.AnalyticsAPI.events.dto.response.EventResponse;
 import com.daniil.AnalyticsAPI.events.models.EventModel;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
@@ -47,7 +52,7 @@ public class EventsController {
     }
 
     @PostMapping
-    public ResponseEntity<EventResponse> addEvent(@RequestBody CreateEventRequest request) {
+    public ResponseEntity<EventResponse> addEvent(@Valid @RequestBody CreateEventRequest request) {
         EventModel newEvent = eventsService.createEvent(
                 request.eventType(),
                 request.eventSource(),
@@ -59,4 +64,36 @@ public class EventsController {
 
         return ResponseEntity.created(location).body(convertedEvent);
     }
+
+    @GetMapping("/report")
+    public ResponseEntity<EventReportResponse> getReport() {
+        EventReportResponse report = eventsService.generateReport();
+        return ResponseEntity.ok(report);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EventResponse> getEventById(@PathVariable UUID id) {
+        EventModel event = eventsService.findEventById(id);
+        EventResponse convertedEvent = eventsService.toResponse(event);
+
+        return convertedEvent != null ? ResponseEntity.ok(convertedEvent) : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EventResponse> updateEventById(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateEventRequest request) {
+
+        EventModel updatedEvent = eventsService.updateEvent(id, request.eventType(), request.eventSource());
+        EventResponse convertedEvent = eventsService.toResponse(updatedEvent);
+
+        return ResponseEntity.ok(convertedEvent);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable UUID id) {
+        eventsService.removeEvent(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

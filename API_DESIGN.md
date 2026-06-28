@@ -185,7 +185,7 @@ Response:
 
 6. events Report
 
-Endpoint: GET /api/v1/report
+Endpoint: GET /api/v1/events/report
 
 Notes:
 

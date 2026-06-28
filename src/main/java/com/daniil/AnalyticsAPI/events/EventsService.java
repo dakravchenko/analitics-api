@@ -3,13 +3,16 @@ package com.daniil.AnalyticsAPI.events;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.daniil.AnalyticsAPI.events.models.EventModel;
 import com.daniil.AnalyticsAPI.enums.EventSource;
 import com.daniil.AnalyticsAPI.enums.EventType;
+import com.daniil.AnalyticsAPI.events.dto.response.EventReportResponse;
 import com.daniil.AnalyticsAPI.events.dto.response.EventResponse;
 import com.daniil.AnalyticsAPI.events.exception.RecordNotFoundException;
 
@@ -57,4 +60,35 @@ public class EventsService {
         return event;
     }
 
+    public EventModel updateEvent(UUID id, EventType eventType, EventSource eventSource) {
+        EventModel event = findEventById(id);
+        event.setEventType(eventType);
+        event.setEventSource(eventSource);
+        return event;
+    }
+
+    public void removeEvent(UUID id) {
+        EventModel event = findEventById(id);
+        events.remove(event);
+    }
+
+    public EventReportResponse generateReport() {
+        int totalEntries = events.size();
+        int totalUniqueSessions = (int) events.stream()
+                .map(EventModel::getSessionId)
+                .distinct()
+                .count();
+
+        Map<String, Integer> eventTypeSummary = events.stream()
+                .collect(Collectors.groupingBy(
+                        event -> event.getEventType().toString(),
+                        Collectors.summingInt(e -> 1)));
+
+        Map<String, Integer> eventSourceSummary = events.stream()
+                .collect(Collectors.groupingBy(
+                        event -> event.getEventSource().toString(),
+                        Collectors.summingInt(e -> 1)));
+
+        return new EventReportResponse(totalEntries, totalUniqueSessions, eventTypeSummary, eventSourceSummary);
+    }
 }
